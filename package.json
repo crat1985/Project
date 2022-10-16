@@ -1,0 +1,23 @@
+{
+  "name": "navigatorinnodejs",
+  "version": "1.0.0",
+  "description": "A navigator built in NodeJS",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaelDevFr/Project.git"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "MaelDevFr,RIC217",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaelDevFr/Project/issues"
+  },
+  "homepage": "https://github.com/MaelDevFr/Project#readme",
+  "dependencies": {
+    "electron": "^21.1.1",
+    "google-search-results-nodejs": "^2.1.0"
+  }
+}

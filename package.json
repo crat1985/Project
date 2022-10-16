@@ -16,7 +16,7 @@
     "url": "https://github.com/MaelDevFr/Project/issues"
   },
   "homepage": "https://github.com/MaelDevFr/Project#readme",
-  "dependencies": {
+  "devDependencies": {
     "electron": "^21.1.1"
   }
 }

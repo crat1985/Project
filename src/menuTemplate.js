@@ -6,8 +6,7 @@ module.exports = [
         label: "Fichier",
         submenu: [
             {
-                label: "Quitter",
-                click: app.quit
+                role: "close"
             }
         ]
     },

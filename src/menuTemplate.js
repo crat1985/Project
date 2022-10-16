@@ -1,5 +1,6 @@
 const {app,shell,BrowserWindow} = require("electron")
 const path = require("path")
+var canOpenWindow = true
 module.exports = [
     {
         label: "Fichier",
@@ -16,6 +17,8 @@ module.exports = [
             {
                 label: "A propos",
                 click: ()=>{
+                    if (!canOpenWindow) return
+                    canOpenWindow = false
                     const aboutWin = new BrowserWindow({
                         width: 300,
                         height: 300
@@ -23,6 +26,9 @@ module.exports = [
                     aboutWin.loadFile(path.join(__dirname,"about.html"))
                     aboutWin.show()
                     aboutWin.setMenu(null)
+                    aboutWin.on("closed",()=>{
+                        canOpenWindow = true
+                    })
                 }
             },
             {

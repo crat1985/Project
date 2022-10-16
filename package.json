@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/MaelDevFr/Project#readme",
   "dependencies": {
-    "electron": "^21.1.1",
-    "google-search-results-nodejs": "^2.1.0"
+    "electron": "^21.1.1"
   }
 }

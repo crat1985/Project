@@ -29,18 +29,3 @@ app.on("window-all-closed",()=>{
         app.quit()
     }
 })
-
-let engine = "duckduckgo"
-let search = "vscode"
-let lang = "fr-fr"
-https.get("https://serpapi.com/search.json?engine="+engine+"&q="+search+"&kl="+lang,function(res){
-    let data = ""
-
-    res.on("data",buff=>{
-        data+=buff
-    })
-
-    res.on("end",()=>{
-        console.log(JSON.parse(data));
-    })
-})

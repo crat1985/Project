@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <script>
         window.addEventListener("DOMContentLoaded",()=>{
-            window.api.sendUrl(document.querySelector("webview").src)
+            const webview = document.querySelector("webview")
+            window.api.sendUrl(webview.src)
+            webview.addEventListener("update-target-url",(e,url)=>{
+                window.api.sendUrl(webview.src)
+            })
         })
     </script>
 </head>

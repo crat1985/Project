@@ -12,10 +12,12 @@ function createWindow(){
             preload: path.join(__dirname,"preload.js"),
             nodeIntegration: true,
             webviewTag: true
-        }
+        },
+        show: false
     })
 
     w.loadFile("index.html")
+    w.once("ready-to-show",w.show)
 }
 
 app.whenReady().then(()=>{

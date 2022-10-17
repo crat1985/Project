@@ -37,7 +37,9 @@ module.exports = [
                         height: 300,
                         webPreferences: {
                             preload: path.join(__dirname,"about.js")
-                        }
+                        },
+                        resizable: false,
+                        show: false
                     })
                     aboutWin.loadFile(path.join(__dirname,"about.html"))
                     aboutWin.show()
@@ -45,6 +47,7 @@ module.exports = [
                     aboutWin.on("closed",()=>{
                         canOpenWindow = true
                     })
+                    aboutWin.once("ready-to-show",aboutWin.show)
                 }
             },
             {

@@ -11,3 +11,9 @@ button{
 button:hover{
     background-color: darkblue;
 }
+span{
+    color: blue;
+}
+span:hover{
+    cursor: pointer;
+}

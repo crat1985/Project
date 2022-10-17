@@ -1,8 +1,9 @@
-const {app,BrowserWindow,Menu} = require("electron")
+const {app,BrowserWindow,Menu,ipcMain} = require("electron")
 const path = require("path")
 const menuTemplate = require("./src/menuTemplate")
 
 const menu = Menu.buildFromTemplate(menuTemplate)
+
 Menu.setApplicationMenu(menu)
 function createWindow(){
     const w = new BrowserWindow({
@@ -22,6 +23,10 @@ function createWindow(){
 
 app.whenReady().then(()=>{
     createWindow()
+
+    ipcMain.on("url-changed",(event,url)=>{
+        console.log(url);
+    })
 
     app.on("activate",()=>{
         if (BrowserWindow.getAllWindows.length===0){

@@ -1,4 +1,4 @@
-const {app,shell,BrowserWindow} = require("electron")
+const {shell,BrowserWindow} = require("electron")
 const path = require("path")
 var canOpenWindow = true
 module.exports = [
@@ -39,7 +39,8 @@ module.exports = [
                             preload: path.join(__dirname,"about.js")
                         },
                         resizable: false,
-                        show: false
+                        show: false,
+                        movable: false
                     })
                     aboutWin.loadFile(path.join(__dirname,"about.html"))
                     aboutWin.show()

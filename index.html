@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navigateur Web</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        window.addEventListener("DOMContentLoaded",()=>{
+            window.api.sendUrl(document.querySelector("webview").src)
+        })
+    </script>
 </head>
 <body>
-    <webview id="foo" src="https://www.google.com/"></webview>
+    <webview id="foo" src="https://www.google.com/" preload="./webviewPreload.js"></webview>
 </body>
 </html>

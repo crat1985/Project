@@ -1,15 +1,8 @@
-// const https = require("https")
-
-// https.get("https://google.com/search?q=test",(res)=>{
-//     let datas = ""
-//     res.on("data",data=>{
-//         datas+=data
-//     })
-//     res.on("end",()=>{
-//         console.log(datas);
-//     })
-// })
+const {contextBridge, ipcRenderer} = require("electron")
 
 window.addEventListener("DOMContentLoaded",(e)=>{
-    console.log(document.querySelector("html"));
+    console.log("slt");    
+})
+contextBridge.exposeInMainWorld("api",{
+    sendUrl: (url) => ipcRenderer.send("url-changed",url)
 })

@@ -1,13 +1,17 @@
-const {app,BrowserWindow} = require("electron")
+const {app,BrowserWindow,Menu} = require("electron")
 const path = require("path")
-const https = require("https")
+const menuTemplate = require("./src/menuTemplate")
 
+const menu = Menu.buildFromTemplate(menuTemplate)
+Menu.setApplicationMenu(menu)
 function createWindow(){
     const w = new BrowserWindow({
         width: 1080,
         height: 720,
         webPreferences: {
-            preload: path.join(__dirname,"preload.js")
+            preload: path.join(__dirname,"preload.js"),
+            nodeIntegration: true,
+            webviewTag: true
         }
     })
 
@@ -25,22 +29,5 @@ app.whenReady().then(()=>{
 })
 
 app.on("window-all-closed",()=>{
-    if (process.platform!=='darwin'){
-        app.quit()
-    }
-})
-
-let engine = "duckduckgo"
-let search = "vscode"
-let lang = "fr-fr"
-https.get("https://serpapi.com/search.json?engine="+engine+"&q="+search+"&kl="+lang,function(res){
-    let data = ""
-
-    res.on("data",buff=>{
-        data+=buff
-    })
-
-    res.on("end",()=>{
-        console.log(JSON.parse(data));
-    })
+    if (process.platform!=='darwin') app.quit()
 })

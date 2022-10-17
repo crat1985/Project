@@ -8,7 +8,9 @@
     "url": "git+https://github.com/MaelDevFr/Project.git"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "MaelDevFr,RIC217",
   "license": "ISC",
@@ -16,8 +18,43 @@
     "url": "https://github.com/MaelDevFr/Project/issues"
   },
   "homepage": "https://github.com/MaelDevFr/Project#readme",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.67",
+    "@electron-forge/maker-deb": "^6.0.0-beta.67",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.67",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.67",
+    "@electron-forge/maker-zip": "^6.0.0-beta.67",
+    "electron": "^21.1.1"
+  },
   "dependencies": {
-    "electron": "^21.1.1",
-    "google-search-results-nodejs": "^2.1.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "fs": "^0.0.1-security"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "navigatorinnodejs"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

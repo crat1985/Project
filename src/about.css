@@ -1,0 +1,13 @@
+body{
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+button{
+    background-color: blue;
+    border-color: rgb(0, 0, 222);
+    color: white;
+}
+button:hover{
+    background-color: darkblue;
+}

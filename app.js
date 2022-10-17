@@ -12,7 +12,7 @@ function createWindow(){
         webPreferences: {
             preload: path.join(__dirname,"preload.js"),
             nodeIntegration: true,
-            webviewTag: true
+            webviewTag: true,
         },
         show: false
     })
@@ -29,7 +29,7 @@ app.whenReady().then(()=>{
     })
 
     app.on("activate",()=>{
-        if (BrowserWindow.getAllWindows.length===0){
+        if (BrowserWindow.getAllWindows().length===0){
             createWindow()
         }
     })

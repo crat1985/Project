@@ -11,6 +11,20 @@ module.exports = [
         ]
     },
     {
+        label: 'View',
+        submenu: [
+            { role: 'reload' },
+            { role: 'forceReload' },
+            { role: 'toggleDevTools' },
+            { type: 'separator' },
+            { role: 'resetZoom' },
+            { role: 'zoomIn' },
+            { role: 'zoomOut' },
+            { type: 'separator' },
+            { role: 'togglefullscreen' }
+        ]
+    },
+    {
         label: "Aide",
         submenu: [
             {
@@ -20,7 +34,10 @@ module.exports = [
                     canOpenWindow = false
                     const aboutWin = new BrowserWindow({
                         width: 300,
-                        height: 300
+                        height: 300,
+                        webPreferences: {
+                            preload: path.join(__dirname,"about.js")
+                        }
                     })
                     aboutWin.loadFile(path.join(__dirname,"about.html"))
                     aboutWin.show()

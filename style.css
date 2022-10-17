@@ -4,6 +4,16 @@ body{
     height: 100vh;
 }
 webview{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: calc(100vh - 23px);
+}
+input[type=text]{
+    width: calc(100vw - 8px);
+    height: 17px;
+    overflow: hidden;
+    background-color: black;
+    color: white;
+}
+input[type=text]:focus{
+    outline-color: blue;
 }

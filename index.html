@@ -6,17 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navigateur Web</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-        window.addEventListener("DOMContentLoaded",()=>{
-            const webview = document.querySelector("webview")
-            window.api.sendUrl(webview.src)
-            webview.addEventListener("update-target-url",(e,url)=>{
-                window.api.sendUrl(webview.src)
-            })
-        })
-    </script>
+    <script src="./index.js"></script>
 </head>
 <body>
+    <form action="" class="form">
+        <input type="text" name="url" id="url" class="url" autocomplete="off">
+        <input type="submit" value="" style="visibility: hidden;width: 0;height: 0;margin: 0;padding: 0;border: 0;" class="submit">
+    </form>
     <webview id="foo" src="https://www.google.com/"></webview>
 </body>
 </html>

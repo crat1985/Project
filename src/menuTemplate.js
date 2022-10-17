@@ -30,20 +30,21 @@ module.exports = [
             {
                 label: "A propos",
                 click: ()=>{
-                    if (!canOpenWindow) return
+                    if(!canOpenWindow) return
                     canOpenWindow = false
                     const aboutWin = new BrowserWindow({
                         width: 300,
                         height: 300,
                         webPreferences: {
-                            preload: path.join(__dirname,"about.js")
+                            preload: path.join(__dirname,"aboutPreload.js"),
+                            nodeIntegration: true,
                         },
                         resizable: false,
                         show: false,
-                        movable: false
+                        movable: false,
+                        alwaysOnTop: true
                     })
                     aboutWin.loadFile(path.join(__dirname,"about.html"))
-                    aboutWin.show()
                     aboutWin.setMenu(null)
                     aboutWin.on("closed",()=>{
                         canOpenWindow = true

@@ -6,7 +6,7 @@ const fs = require("fs")
 const menu = Menu.buildFromTemplate(menuTemplate)
 
 const dataDir = path.join(__dirname,"data")
-const bookmarksFile = path.join(__dirname,"data","bookmarks")
+const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
 
 if(!fs.existsSync(dataDir)){
     fs.mkdirSync(dataDir)

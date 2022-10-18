@@ -6,22 +6,33 @@ module.exports = [
         label: "Fichier",
         submenu: [
             {
-                role: "close"
+                role: "close",
+                id: "close",
+                label: "Quitter"
             }
         ]
     },
     {
         label: 'View',
         submenu: [
-            { role: 'reload' },
-            { role: 'forceReload' },
-            { role: 'toggleDevTools' },
-            { type: 'separator' },
-            { role: 'resetZoom' },
-            { role: 'zoomIn' },
-            { role: 'zoomOut' },
-            { type: 'separator' },
-            { role: 'togglefullscreen' }
+            { role: 'reload',id:"reload", label:"Actualiser"},
+            { role: 'forceReload', id:"forceReload", label:"Forcer l'actualisation"},
+            { role: 'toggleDevTools', id:"devTools", label : "Afficher les outils développeurs"},
+            { type: 'separator'},
+            { role: 'resetZoom', id:"resetZoom", label:"Réinitialiser le zoom"},
+            { role: 'zoomIn', id:"zoomIn", label:"Zoom +"},
+            { role: 'zoomOut', id:"zoomOut", label:"Zoom -"},
+            { type: 'separator'},
+            { role: 'togglefullscreen', id:"fullScreen", label:"Plein écran"}
+        ]
+    },
+    {
+        label: "Favoris",
+        submenu: [
+            {
+                label: "Ajouter cette page aux favoris",
+                id: "addBookmark"
+            }
         ]
     },
     {

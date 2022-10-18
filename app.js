@@ -5,6 +5,8 @@ const menuTemplate = require("./src/menuTemplate")
 const menu = Menu.buildFromTemplate(menuTemplate)
 
 Menu.setApplicationMenu(menu)
+
+let currentURL
 function createWindow(){
     const w = new BrowserWindow({
         width: 1080,
@@ -12,7 +14,7 @@ function createWindow(){
         webPreferences: {
             preload: path.join(__dirname,"preload.js"),
             nodeIntegration: true,
-            webviewTag: true,
+            webviewTag: true
         },
         show: false
     })
@@ -25,7 +27,7 @@ app.whenReady().then(()=>{
     createWindow()
 
     ipcMain.on("url-changed",(event,url)=>{
-        console.log(url);
+        currentURL = url
     })
 
     app.on("activate",()=>{

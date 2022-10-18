@@ -1,10 +1,36 @@
 const {app,BrowserWindow,Menu,ipcMain} = require("electron")
 const path = require("path")
 const menuTemplate = require("./src/menuTemplate")
+const fs = require("fs")
 
 const menu = Menu.buildFromTemplate(menuTemplate)
 
+const dataDir = path.join(__dirname,"data")
+const bookmarksFile = path.join(__dirname,"data","bookmarks")
+
+if(!fs.existsSync(dataDir)){
+    fs.mkdirSync(dataDir)
+}
+
+if(!fs.existsSync(bookmarksFile)){
+    fs.writeFileSync(bookmarksFile,"")
+}
+
+let bookmarksFileContent = fs.readFileSync(bookmarksFile).toString()
+let bookmarks = []
+if(bookmarksFileContent.length > 0){
+    bookmarksFileContent.split("\n").forEach((bookmark,i,array)=>{
+        if(i==0){
+            bookmarks.push({url : bookmark, title: array[i+1]})
+        } else if(i%2==0){
+            bookmarks.push({url : bookmark, title: array[i+1]})
+        }
+    })
+}
+
+
 Menu.setApplicationMenu(menu)
+// Menu.getApplicationMenu().getMenuItemById("addBookmark").label;
 
 let currentURL
 function createWindow(){

@@ -1,5 +1,10 @@
+@font-face {
+    font-family: Ubuntu;
+    src: url("../fonts/ubuntu-font-family-0.83/Ubuntu-B.ttf"),format("truetype"),
+    /* url("../fonts/__MACOSX/ubuntu-font-family-0.83/._Ubuntu-B.ttf"),format("truetype") */
+}
 *{
-    font-family: Ubuntu, cursive;
+    font-family: Ubuntu;
 }
 body{
     margin: 0;

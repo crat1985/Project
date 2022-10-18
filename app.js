@@ -20,9 +20,9 @@ let bookmarksFileContent = fs.readFileSync(bookmarksFile).toString()
 let bookmarks = []
 if(bookmarksFileContent.length > 0){
     bookmarksFileContent.split("\n").forEach((bookmark,i,array)=>{
-        if(i==0){
+        if(i==0 && bookmark.length>0){
             bookmarks.push({url : bookmark, title: array[i+1]})
-        } else if(i%2==0){
+        } else if(i%2==0 && bookmark.length>0){
             bookmarks.push({url : bookmark, title: array[i+1]})
         }
     })

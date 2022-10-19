@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded",()=>{
     const urlBar = document.querySelector("input[type=text]")
     window.api.sendUrl(webview.src)
     webview.addEventListener("update-target-url",(e,URL)=>{
-        window.api.sendUrl(webview.src)
+        window.api.sendUrl(webview.getURL(),webview.getTitle())
         urlBar.value = webview.src
     })
     urlBar.value = webview.src

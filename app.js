@@ -1,36 +1,18 @@
-const {app,BrowserWindow,Menu,ipcMain} = require("electron")
-const path = require("path")
+const {app,BrowserWindow,Menu,ipcMain, MenuItem} = require("electron")
+const path = require("path");
+const saveBookmarks = require("./modules/saveBookmarks");
+const loadBookmarks = require("./modules/loadBookmarks")
 const menuTemplate = require("./src/menuTemplate")
-const fs = require("fs")
-
-const menu = Menu.buildFromTemplate(menuTemplate)
+let menu = Menu.buildFromTemplate(menuTemplate);
 
 const dataDir = path.join(__dirname,"data")
 const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
-
-if(!fs.existsSync(dataDir)){
-    fs.mkdirSync(dataDir)
-}
-
-if(!fs.existsSync(bookmarksFile)){
-    fs.writeFileSync(bookmarksFile,"")
-}
-
-let bookmarksFileContent = fs.readFileSync(bookmarksFile).toString()
-let bookmarks = []
-if(bookmarksFileContent.length > 0){
-    bookmarksFileContent.split("\n").forEach((bookmark,i,array)=>{
-        if(i==0 && bookmark.length>0){
-            bookmarks.push({url : bookmark, title: array[i+1]})
-        } else if(i%2==0 && bookmark.length>0){
-            bookmarks.push({url : bookmark, title: array[i+1]})
-        }
-    })
-}
-
+let bookmarks = loadBookmarks(dataDir,bookmarksFile)
 
 Menu.setApplicationMenu(menu)
-// Menu.getApplicationMenu().getMenuItemById("addBookmark").label;
+
+menu.getMenuItemById("bookmarks").submenu.append(new MenuItem({type:"separator"}))
+menu.getMenuItemById("bookmarks").submenu.append(new MenuItem({label:"test"}))
 
 let currentURL
 function createWindow(){
@@ -44,7 +26,6 @@ function createWindow(){
         },
         show: false
     })
-
     w.loadFile("index.html")
     w.once("ready-to-show",w.show)
 }
@@ -54,6 +35,10 @@ app.whenReady().then(()=>{
 
     ipcMain.on("url-changed",(event,url)=>{
         currentURL = url
+    })
+
+    ipcMain.on("update-bookmarks",(event)=>{
+        saveBookmarks(dataDir,bookmarks,bookmarksFile)
     })
 
     app.on("activate",()=>{

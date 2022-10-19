@@ -22,4 +22,7 @@ window.addEventListener("DOMContentLoaded",()=>{
         }
         
     })
+    window.api.onUpdatedURL("update-url",(event,url)=>{
+        document.getElementById("foo").src = url
+    })
 })

@@ -44,6 +44,7 @@ const aboutFunc = ()=>{
 }
 let w
 const openURL = (url)=>{
+    console.log("log");
     w.webContents.send('update-url', url)
 }
 let menuTemplate = require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)

@@ -1,20 +1,20 @@
-const {shell,BrowserWindow,MenuItem,Menu} = require("electron")
-const path = require("path")
-var canOpenWindow = true
-module.exports = [
-    {
-        label: "Fichier",
-        submenu: [
-            {
-                role: "close",
-                id: "close",
-                label: "Quitter"
-            }
-        ]
-    },
-    {
-        label: 'View',
-        submenu: [
+const { Menu } = require("electron");
+
+module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks)=>{
+    let bookmarksTab = [
+        {
+            label: "Ajouter cette page aux favoris",
+            id: "addBookmark",
+            click: addBookmarkFunc
+        },
+        {type:"separator"}
+    ]
+    bookmarks.forEach((bookmark,i) => {
+        bookmarksTab.push({label: bookmark.title+" - "+bookmark.url,id:"bookmark"+(i+1),click:()=>openURL(bookmark.url)})
+    });
+    let finalMenu = [
+    {label: "Fichier",submenu: [{role: "close",id: "close",label: "Quitter"}]},
+    {label: 'View',submenu: [
             { role: 'reload',id:"reload", label:"Actualiser"},
             { role: 'forceReload', id:"forceReload", label:"Forcer l'actualisation"},
             { role: 'toggleDevTools', id:"devTools", label : "Afficher les outils développeurs"},
@@ -24,25 +24,10 @@ module.exports = [
             { role: 'zoomOut', id:"zoomOut", label:"Zoom -"},
             { type: 'separator'},
             { role: 'togglefullscreen', id:"fullScreen", label:"Plein écran"}
-        ]
-    },
+        ]},
     {
-        label: "Favoris",
-        submenu: [
-            {
-                label: "Favoris",
-                id: "bookmarks",
-                submenu: [
-                    {
-                        label: "Ajouter cette page aux favoris",
-                        id: "addBookmark",
-                        click: ()=>{
-                            let menu = Menu.getApplicationMenu()
-                            console.log(menu.getMenuItemById("bookmarks"))
-                        }
-                    }
-                ]
-            }
+        label: "Favoris",submenu: [
+            {label: "Favoris",id: "bookmarks",submenu:bookmarksTab}
         ]
     },
     {
@@ -50,28 +35,7 @@ module.exports = [
         submenu: [
             {
                 label: "A propos",
-                click: ()=>{
-                    if(!canOpenWindow) return
-                    canOpenWindow = false
-                    const aboutWin = new BrowserWindow({
-                        width: 300,
-                        height: 300,
-                        webPreferences: {
-                            preload: path.join(__dirname,"aboutPreload.js"),
-                            nodeIntegration: true,
-                        },
-                        resizable: false,
-                        show: false,
-                        movable: false,
-                        alwaysOnTop: true
-                    })
-                    aboutWin.loadFile(path.join(__dirname,"about.html"))
-                    aboutWin.setMenu(null)
-                    aboutWin.on("closed",()=>{
-                        canOpenWindow = true
-                    })
-                    aboutWin.once("ready-to-show",aboutWin.show)
-                }
+                click: aboutFunc
             },
             {
                 type: "separator"
@@ -83,5 +47,8 @@ module.exports = [
                 }
             }
         ]
-    }
-]
+        }
+    ]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(finalMenu))
+    return finalMenu
+}

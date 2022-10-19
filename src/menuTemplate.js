@@ -1,4 +1,4 @@
-const {shell,BrowserWindow} = require("electron")
+const {shell,BrowserWindow,MenuItem,Menu} = require("electron")
 const path = require("path")
 var canOpenWindow = true
 module.exports = [
@@ -30,8 +30,18 @@ module.exports = [
         label: "Favoris",
         submenu: [
             {
-                label: "Ajouter cette page aux favoris",
-                id: "addBookmark"
+                label: "Favoris",
+                id: "bookmarks",
+                submenu: [
+                    {
+                        label: "Ajouter cette page aux favoris",
+                        id: "addBookmark",
+                        click: ()=>{
+                            let menu = Menu.getApplicationMenu()
+                            console.log(menu.getMenuItemById("bookmarks"))
+                        }
+                    }
+                ]
             }
         ]
     },

@@ -1,4 +1,4 @@
-const {app,BrowserWindow,Menu,ipcMain,dialog} = require("electron")
+const {app,BrowserWindow,Menu,ipcMain,dialog, ipcRenderer} = require("electron")
 const path = require("path");
 const saveBookmarks = require("./modules/saveBookmarks");
 const dataDir = path.join(__dirname,"data")

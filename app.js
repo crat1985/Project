@@ -2,7 +2,8 @@ const {app,BrowserWindow,Menu,ipcMain,dialog} = require("electron")
 const path = require("path");
 const saveBookmarks = require("./modules/saveBookmarks");
 const dataDir = path.join(__dirname,"data")
-let bookmarks = require("./modules/loadBookmarks")(dataDir,path.join(__dirname,"data","bookmarks.data"))
+const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
+let bookmarks = require("./modules/loadBookmarks")(dataDir,bookmarksFile)
 let history = require("./modules/loadHistory")(path.join(__dirname,"data","history.data"))
 let currentURL
 let currentTitle
@@ -20,7 +21,8 @@ const aboutFunc = ()=>{
         resizable: false,
         show: false,
         movable: false,
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        frame: false
     })
     aboutWin.loadFile(path.join(__dirname,"src","about.html"))
     aboutWin.setMenu(null)

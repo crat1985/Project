@@ -32,7 +32,6 @@ const aboutFunc = ()=>{
 }
 let w
 const openURL = (url)=>{
-    console.log("log");
     w.webContents.send('update-url', url)
 }
 const addBookmarkFunc = ()=>{

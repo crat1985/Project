@@ -14,7 +14,7 @@ module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks,history)=>{
     });
     let historyTab = []
     history.forEach(historyInfo=>{
-        historyTab.push({label:historyInfo.title+" - "+historyInfo.url+" - "+historyInfo.date})
+        historyTab.push({label:historyInfo.title+" - "+historyInfo.url+" - "+historyInfo.date,click:()=>openURL(historyInfo.url)})
     })
     let finalMenu = [
     {label: "Fichier",submenu: [{role: "close",id: "close",label: "Quitter"}]},

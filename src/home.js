@@ -18,3 +18,10 @@ async function afficherDate() {
   }
 }
 afficherDate();
+
+const searchBar = document.querySelector(".search-bar")
+searchBar.addEventListener("keypress",e=>{
+  if(e.key=="Enter"){
+    location.href = "https://google.com/search?q="+searchBar.value
+  }
+})

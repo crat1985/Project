@@ -1,6 +1,6 @@
 const { Menu } = require("electron");
 
-module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks)=>{
+module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks,history)=>{
     let bookmarksTab = [
         {
             label: "Ajouter cette page aux favoris",
@@ -12,6 +12,10 @@ module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks)=>{
     bookmarks.forEach((bookmark,i) => {
         bookmarksTab.push({label: bookmark.title+" - "+bookmark.url,id:"bookmark"+(i+1),click:()=>openURL(bookmark.url)})
     });
+    let historyTab = []
+    history.forEach(historyInfo=>{
+        historyTab.push({label:historyInfo.title+" - "+historyInfo.url+" - "+historyInfo.date})
+    })
     let finalMenu = [
     {label: "Fichier",submenu: [{role: "close",id: "close",label: "Quitter"}]},
     {label: 'View',submenu: [
@@ -28,6 +32,11 @@ module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks)=>{
     {
         label: "Favoris",submenu: [
             {label: "Favoris",id: "bookmarks",submenu:bookmarksTab}
+        ]
+    },
+    {
+        label: "Historique",submenu: [
+            {label: "Historique",id:"history",submenu:historyTab}
         ]
     },
     {

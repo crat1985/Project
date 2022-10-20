@@ -70,15 +70,15 @@ function createWindow(){
     w.loadFile("index.html")
     w.once("ready-to-show",w.show)
 }
-
 app.whenReady().then(()=>{
     createWindow()
 
     ipcMain.on("url-changed",(event,url,title)=>{
         currentURL = url
         currentTitle = title
-        history.push({url:title,title:title,date:Date.now().toLocaleString()})
+        history.push({url:url,title:title,date:require("./modules/getDate")()})
         require("./modules/saveHistory")(dataDir,history,path.join(__dirname,"data","history.data"))
+        require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history)
     })
 
     ipcMain.on("update-bookmarks",(event)=>{

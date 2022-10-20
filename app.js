@@ -8,18 +8,6 @@ let bookmarks = loadBookmarks(dataDir,bookmarksFile)
 let currentURL
 let currentTitle
 let canOpenAboutWindow = true
-const addBookmarkFunc = ()=>{
-    let alreadyExist = false
-    bookmarks.forEach(bookmark=>{
-        if(bookmark.url==currentURL){
-            alreadyExist = true
-            return
-        }
-    })
-    if(!alreadyExist) bookmarks.push({url:currentURL,title:currentTitle})
-    console.log(bookmarks);
-    saveBookmarks(dataDir,bookmarks,bookmarksFile)
-}
 const aboutFunc = ()=>{
     if(!canOpenAboutWindow) return
     canOpenAboutWindow = false
@@ -46,6 +34,19 @@ let w
 const openURL = (url)=>{
     console.log("log");
     w.webContents.send('update-url', url)
+}
+const addBookmarkFunc = ()=>{
+    let alreadyExist = false
+    bookmarks.forEach(bookmark=>{
+        if(bookmark.url==currentURL){
+            alreadyExist = true
+            return
+        }
+    })
+    if(!alreadyExist) bookmarks.push({url:currentURL,title:currentTitle})
+    console.log(bookmarks);
+    saveBookmarks(dataDir,bookmarks,bookmarksFile)
+    require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)
 }
 let menuTemplate = require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)
 let menu = Menu.buildFromTemplate(menuTemplate);

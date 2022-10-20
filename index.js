@@ -1,10 +1,13 @@
 window.addEventListener("DOMContentLoaded",()=>{
     const webview = document.querySelector("webview")
     const urlBar = document.querySelector("input[type=text]")
-    window.api.sendUrl(webview.src)
-    webview.addEventListener("update-target-url",(e,URL)=>{
-        window.api.sendUrl(webview.src)
-        urlBar.value = webview.src
+    // webview.addEventListener("update-target-url",(e,URL)=>{
+    //     window.api.sendUrl(webview.getURL(),webview.getTitle())
+    //     urlBar.value = webview.getURL()
+    // })
+    webview.addEventListener("dom-ready",()=>{
+        console.log(webview.getURL(),webview.getTitle());
+        window.api.sendUrl(webview.getURL(),webview.getTitle())
     })
     urlBar.value = webview.src
     urlBar.addEventListener("keypress",e=>{

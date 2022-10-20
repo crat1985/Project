@@ -1,10 +1,9 @@
-const {app,BrowserWindow,Menu,ipcMain, MenuItem} = require("electron")
+const {app,BrowserWindow,Menu,ipcMain,dialog} = require("electron")
 const path = require("path");
 const saveBookmarks = require("./modules/saveBookmarks");
-const loadBookmarks = require("./modules/loadBookmarks")
 const dataDir = path.join(__dirname,"data")
-const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
-let bookmarks = loadBookmarks(dataDir,bookmarksFile)
+let bookmarks = require("./modules/loadBookmarks")(dataDir,path.join(__dirname,"data","bookmarks.data"))
+let history = require("./modules/loadHistory")(path.join(__dirname,"data","history.data"))
 let currentURL
 let currentTitle
 let canOpenAboutWindow = true
@@ -32,7 +31,6 @@ const aboutFunc = ()=>{
 }
 let w
 const openURL = (url)=>{
-    console.log("log");
     w.webContents.send('update-url', url)
 }
 const addBookmarkFunc = ()=>{
@@ -40,15 +38,18 @@ const addBookmarkFunc = ()=>{
     bookmarks.forEach(bookmark=>{
         if(bookmark.url==currentURL){
             alreadyExist = true
+            dialog.showMessageBox(w,{title: "Favori déjà existant",message: "Le favoris n'a pas été ajouté car il fait déjà partie de votre liste de favoris."})
             return
         }
     })
-    if(!alreadyExist) bookmarks.push({url:currentURL,title:currentTitle})
-    console.log(bookmarks);
+    if(!alreadyExist){
+        bookmarks.push({url:currentURL,title:currentTitle})
+        dialog.showMessageBox(w,{title:"Favori ajouté",message:"Le site "+bookmarks[-1].url+" a bien été ajouté à votre liste de favoris."})
+    }
     saveBookmarks(dataDir,bookmarks,bookmarksFile)
     require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)
 }
-let menuTemplate = require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)
+let menuTemplate = require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history)
 let menu = Menu.buildFromTemplate(menuTemplate);
 
 Menu.setApplicationMenu(menu)
@@ -74,6 +75,8 @@ app.whenReady().then(()=>{
     ipcMain.on("url-changed",(event,url,title)=>{
         currentURL = url
         currentTitle = title
+        history.push({url:title,title:title,date:Date.now().toLocaleString()})
+        require("./modules/saveHistory")(dataDir,history,path.join(__dirname,"data","history.data"))
     })
 
     ipcMain.on("update-bookmarks",(event)=>{

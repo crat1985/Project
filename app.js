@@ -1,10 +1,12 @@
 const {app,BrowserWindow,Menu,ipcMain,dialog, ipcRenderer} = require("electron")
 const path = require("path");
 const saveBookmarks = require("./modules/saveBookmarks");
+const saveHistory = require("./modules/saveHistory");
 const dataDir = path.join(__dirname,"data")
 const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
+const historyFile = path.join(__dirname,"data","history.data")
 let bookmarks = require("./modules/loadBookmarks")(dataDir,bookmarksFile)
-let history = require("./modules/loadHistory")(path.join(__dirname,"data","history.data"))
+let history = require("./modules/loadHistory")(historyFile)
 let currentURL
 let currentTitle
 let canOpenAboutWindow = true
@@ -49,9 +51,22 @@ const addBookmarkFunc = ()=>{
         dialog.showMessageBox(w,{title:"Favori ajouté",message:"Le site "+bookmarks[-1].url+" a bien été ajouté à votre liste de favoris."})
     }
     saveBookmarks(dataDir,bookmarks,bookmarksFile)
-    require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks)
+    buildMenu()
 }
-let menuTemplate = require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history)
+const deleteHistory = ()=>{
+    dialog.showMessageBox(w,{title:"Confirmer", message:"Souhaitez-vous vraiment effacer l'historique ?",type:"question",buttons:["Annuler","Confirmer"],defaultId:0,cancelId:0}).then((value)=>{
+        if(value.response===1){
+            history = []
+            saveHistory(dataDir,history,historyFile)
+            buildMenu()
+            dialog.showMessageBox(w,{title:"Historique effacé",message:"L'historique a été effacé avec succès !"})
+        }
+    })
+}
+const buildMenu = ()=>{
+    return require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history,deleteHistory)
+}
+let menuTemplate = buildMenu()
 let menu = Menu.buildFromTemplate(menuTemplate);
 
 Menu.setApplicationMenu(menu)
@@ -78,7 +93,7 @@ app.whenReady().then(()=>{
         currentTitle = title
         history.push({url:url,title:title,date:require("./modules/getDate")()})
         require("./modules/saveHistory")(dataDir,history,path.join(__dirname,"data","history.data"))
-        require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history)
+        buildMenu()
     })
 
     ipcMain.on("update-bookmarks",(event)=>{

@@ -6,6 +6,6 @@ module.exports = (dataDir,history,historyFile)=>{
     }
     fs.writeFileSync(historyFile,"")
     history.forEach(historyInfo => {
-        fs.appendFileSync(historyFile,historyInfo.url+"\t"+historyInfo.title+"\t"+historyInfo.date+"\n")
+        fs.appendFileSync(historyFile,historyInfo.url+"\t"+historyInfo.title+"\t"+historyInfo.dateUnix+"\n")
     });
 }

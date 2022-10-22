@@ -1,4 +1,5 @@
 const fs = require("fs")
+const getHumanDate = require("./getHumanDate")
 module.exports = (historyFile)=>{
     if(!fs.existsSync(historyFile)){
         fs.writeFileSync(historyFile,"")
@@ -8,7 +9,7 @@ module.exports = (historyFile)=>{
     historyFileContent.split("\n").forEach(historyInfos=>{
         let historyTemp = historyInfos.split("\t")
         if(historyTemp.length>=3){
-            history.push({url:historyTemp[0],title:historyTemp[1],date:historyTemp[2]})
+            history.push({url:historyTemp[0],title:historyTemp[1],date:getHumanDate(new Date(parseInt(historyTemp[2]))),dateUnix:historyTemp[2]})
         }
     })
     return history

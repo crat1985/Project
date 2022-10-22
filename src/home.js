@@ -22,6 +22,6 @@ afficherDate();
 const searchBar = document.querySelector(".search-bar")
 searchBar.addEventListener("keypress",e=>{
   if(e.key=="Enter"){
-    location.href = "https://google.com/search?q="+searchBar.value
+    location.href = "https://search.brave.com/search?q="+searchBar.value
   }
 })

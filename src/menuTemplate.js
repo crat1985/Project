@@ -19,9 +19,22 @@ module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks,history,deleteHist
         },
         {type:"separator"}
     ]
+    let historyTabTemp = []
     history.forEach(historyInfo=>{
         historyTab.push({label:historyInfo.title+" - "+historyInfo.url+" - "+historyInfo.date,click:()=>openURL(historyInfo.url)})
     })
+    //En cours d'implémentation
+    // historyTabTemp.sort((a,b)=>{
+    //     let dateA = a.label.split(" - ")[2]
+    //     let dateB = b.label.split(" - ")[2]
+    //     if(parseInt(dateA)>parseInt(dateB)){
+    //         return -1
+    //     } else if(parseInt(dateA)<parseInt(dateB)){
+    //         return 1
+    //     }
+    //     return 0
+    // })
+    // historyTab = historyTab.concat(historyTabTemp)
     let finalMenu = [
     {label: "Fichier",submenu: [{role: "close",id: "close",label: "Quitter"}]},
     {label: 'View',submenu: [

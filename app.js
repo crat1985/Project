@@ -1,5 +1,6 @@
 const {app,BrowserWindow,Menu,ipcMain,dialog, ipcRenderer} = require("electron")
 const path = require("path");
+const getHumanDate = require("./modules/getHumanDate");
 const saveBookmarks = require("./modules/saveBookmarks");
 const saveHistory = require("./modules/saveHistory");
 const dataDir = path.join(__dirname,"data")
@@ -91,7 +92,8 @@ app.whenReady().then(()=>{
     ipcMain.on("url-changed",(event,url,title)=>{
         currentURL = url
         currentTitle = title
-        history.push({url:url,title:title,date:require("./modules/getDate")()})
+        let date = Date.now()
+        history.push({url:url,title:title,date:getHumanDate(new Date(date)),dateUnix:date})
         require("./modules/saveHistory")(dataDir,history,path.join(__dirname,"data","history.data"))
         buildMenu()
     })

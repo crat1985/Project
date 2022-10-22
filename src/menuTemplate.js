@@ -1,4 +1,4 @@
-const { Menu } = require("electron");
+const { Menu, shell } = require("electron");
 
 module.exports = (addBookmarkFunc,aboutFunc,openURL,bookmarks,history,deleteHistory)=>{
     let bookmarksTab = [

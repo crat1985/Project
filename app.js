@@ -48,8 +48,9 @@ const addBookmarkFunc = ()=>{
         }
     })
     if(!alreadyExist){
-        bookmarks.push({url:currentURL,title:currentTitle})
-        dialog.showMessageBox(w,{title:"Favori ajouté",message:"Le site "+bookmarks[-1].url+" a bien été ajouté à votre liste de favoris."})
+        let URLTemp = currentURL
+        bookmarks.push({url:URLTemp,title:currentTitle})
+        dialog.showMessageBox(w,{title:"Favori ajouté",message:"Le site "+URLTemp+" a bien été ajouté à votre liste de favoris."})
     }
     saveBookmarks(dataDir,bookmarks,bookmarksFile)
     buildMenu()

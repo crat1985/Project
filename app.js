@@ -67,10 +67,6 @@ const deleteHistory = ()=>{
 const buildMenu = ()=>{
     return require("./src/menuTemplate")(addBookmarkFunc,aboutFunc,openURL,bookmarks,history,deleteHistory)
 }
-let menuTemplate = buildMenu()
-let menu = Menu.buildFromTemplate(menuTemplate);
-
-Menu.setApplicationMenu(menu)
 
 function createWindow(){
     w = new BrowserWindow({

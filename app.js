@@ -81,12 +81,15 @@ function createWindow(){
         show: false
     })
     w.loadFile("index.html")
+    buildMenu()
     w.once("ready-to-show",w.show)
 }
 app.whenReady().then(()=>{
     createWindow()
 
     ipcMain.on("url-changed",(event,url,title)=>{
+        if(url=="") return
+        if(currentURL==url) return
         currentURL = url
         currentTitle = title
         let date = Date.now()

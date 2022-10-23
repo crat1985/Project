@@ -1,6 +1,10 @@
 window.addEventListener("DOMContentLoaded",()=>{
     const webview = document.querySelector("webview")
     const urlBar = document.querySelector("input[type=text]")
+    webview.addEventListener("did-start-loading",()=>{
+        window.api.sendUrl(webview.getURL(),webview.getTitle())
+        urlBar.value = webview.src
+    })
     webview.addEventListener("dom-ready",()=>{
         window.api.sendUrl(webview.getURL(),webview.getTitle())
         urlBar.value = webview.src

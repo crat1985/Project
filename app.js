@@ -1,11 +1,11 @@
-const {app,BrowserWindow,Menu,ipcMain,dialog, ipcRenderer} = require("electron")
+const {app,BrowserWindow,ipcMain,dialog} = require("electron")
 const path = require("path");
 const getHumanDate = require("./modules/getHumanDate");
 const saveBookmarks = require("./modules/saveBookmarks");
 const saveHistory = require("./modules/saveHistory");
 const dataDir = path.join(__dirname,"data")
-const bookmarksFile = path.join(__dirname,"data","bookmarks.data")
-const historyFile = path.join(__dirname,"data","history.data")
+const bookmarksFile = path.join(dataDir,"bookmarks.data")
+const historyFile = path.join(dataDir,"history.data")
 let bookmarks = require("./modules/loadBookmarks")(dataDir,bookmarksFile)
 let history = require("./modules/loadHistory")(historyFile)
 let currentURL

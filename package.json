@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "winstaller": "node winstaller.js"
   },
   "author": "MaelDevFr,RIC217",
   "license": "ISC",
@@ -27,7 +28,9 @@
     "electron": "^21.1.1"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-osx-sign": "^0.6.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-winstaller": "^5.1.0"
   },
   "config": {
     "forge": {

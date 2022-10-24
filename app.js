@@ -10,30 +10,7 @@ let bookmarks = require("./modules/loadBookmarks")(dataDir,bookmarksFile)
 let history = require("./modules/loadHistory")(historyFile)
 let currentURL
 let currentTitle
-let canOpenAboutWindow = true
-const aboutFunc = ()=>{
-    if(!canOpenAboutWindow) return
-    canOpenAboutWindow = false
-    const aboutWin = new BrowserWindow({
-        width: 300,
-        height: 300,
-        webPreferences: {
-            preload: path.join(__dirname,"src","aboutPreload.js"),
-            nodeIntegration: true,
-        },
-        resizable: false,
-        show: false,
-        movable: false,
-        alwaysOnTop: true,
-        frame: false
-    })
-    aboutWin.loadFile(path.join(__dirname,"src","about.html"))
-    aboutWin.setMenu(null)
-    aboutWin.on("closed",()=>{
-        canOpenAboutWindow = true
-    })
-    aboutWin.once("ready-to-show",aboutWin.show)
-}
+const aboutFunc = require("./modules/aboutFunc")
 let w
 const openURL = (url)=>{
     w.webContents.send('update-url', url)
@@ -80,7 +57,7 @@ function createWindow(){
         },
         show: false
     })
-    w.loadFile("index.html")
+    w.loadFile(path.join(__dirname, "index.html"))
     buildMenu()
     w.once("ready-to-show",w.show)
 }
@@ -94,7 +71,7 @@ app.whenReady().then(()=>{
         currentTitle = title
         let date = Date.now()
         history.push({url:url,title:title,date:getHumanDate(new Date(date)),dateUnix:date})
-        require("./modules/saveHistory")(dataDir,history,path.join(__dirname,"data","history.data"))
+        require("./modules/saveHistory")(dataDir,history,historyFile)
         buildMenu()
     })
 

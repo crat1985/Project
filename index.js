@@ -28,6 +28,7 @@ window.addEventListener("DOMContentLoaded",()=>{
         } else {
             urlBar.value = webview.src
         }
+        document.title = title+" - Navigateur Web"
         webview.addEventListener("did-start-loading",(e)=>{
             document.title = "Chargement en cours..."
             window.api.sendUrlToMain(webview.getURL(),webview.getTitle())
@@ -50,6 +51,6 @@ window.addEventListener("DOMContentLoaded",()=>{
             urlBar.value = webview.src
         }
     })
-    urlBar.value = webview.src
+    urlBar.value = homePage
     urlBar.addEventListener("keypress",urlBarEvent)
 })

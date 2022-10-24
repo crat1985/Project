@@ -61,23 +61,21 @@ function createWindow(){
     buildMenu()
     w.once("ready-to-show",w.show)
 }
+function updateHistory(e,url,title){
+    if(url=="") return
+    if(currentURL==url) return
+    currentURL = url
+    currentTitle = title
+    let date = Date.now()
+    history.push({url:url,title:title,date:getHumanDate(new Date(date)),dateUnix:date})
+    require("./modules/saveHistory")(dataDir,history,historyFile)
+    buildMenu()
+}
+
 app.whenReady().then(()=>{
     createWindow()
 
-    ipcMain.on("url-changed",(event,url,title)=>{
-        if(url=="") return
-        if(currentURL==url) return
-        currentURL = url
-        currentTitle = title
-        let date = Date.now()
-        history.push({url:url,title:title,date:getHumanDate(new Date(date)),dateUnix:date})
-        require("./modules/saveHistory")(dataDir,history,historyFile)
-        buildMenu()
-    })
-
-    ipcMain.on("update-bookmarks",(event)=>{
-        saveBookmarks(dataDir,bookmarks,bookmarksFile)
-    })
+    ipcMain.on("send-url-to-main",updateHistory)
 
     app.on("activate",()=>{
         if (BrowserWindow.getAllWindows().length===0){
